@@ -18,6 +18,19 @@ pip install -r requirements.txt
 
 The `Set-ExecutionPolicy` line only affects the current terminal session and is needed so PowerShell allows the activation script.
 
+## ADFS authentication
+
+`GET /testAdfs` requires an `Authorization: Bearer <jwt>` header. The token's RS256 signature is checked against the ADFS signing keys, along with expiry, issuer and audience. Configure it with environment variables:
+
+```powershell
+$env:ADFS_ISSUER = "https://adfs.example.com/adfs"   # token "iss" claim
+$env:ADFS_AUDIENCE = "<relying party identifier>"    # token "aud" claim
+# optional, defaults to <ADFS_ISSUER>/discovery/keys
+$env:ADFS_JWKS_URL = "https://adfs.example.com/adfs/discovery/keys"
+```
+
+Invalid or missing tokens get `401`/`403`.
+
 ## Run
 
 ```powershell

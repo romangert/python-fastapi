@@ -1,4 +1,5 @@
 fastapi
 uvicorn[standard]
+pyjwt[crypto]
 httpx
 pytest
